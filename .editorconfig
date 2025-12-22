@@ -2,11 +2,20 @@ root = true
 
 # All files
 [*]
-indent_style = space
+indent_style = tab
+indent_size = 4
+insert_final_newline = false
 
-# Xml files
-[*.xml]
+# Xml, Xml-like files
+[*.{xml,cspoj}]
 indent_size = 2
+
+[*.json]
+indent_size = 2
+
+[*.{yaml,yml}]
+indent_size = 2
+indent_style = space
 
 # C# files
 [*.cs]
@@ -14,11 +23,11 @@ indent_size = 2
 #### Core EditorConfig Options ####
 
 # Indentation and spacing
-indent_size = 4
+# indent_size = 4 <- in 'All files' section
 tab_width = 4
 
 # New line preferences
-insert_final_newline = false
+# insert_final_newline = false <- in 'All files' section
 
 #### .NET Coding Conventions ####
 [*.{cs,vb}]
@@ -250,9 +259,9 @@ dotnet_naming_rule.public_static_readonly_fields_should_be_pascalcase.severity =
 dotnet_naming_rule.public_static_readonly_fields_should_be_pascalcase.symbols = public_static_readonly_fields
 dotnet_naming_rule.public_static_readonly_fields_should_be_pascalcase.style = pascalcase
 
-dotnet_naming_rule.private_static_readonly_fields_should_be_pascalcase.severity = suggestion
-dotnet_naming_rule.private_static_readonly_fields_should_be_pascalcase.symbols = private_static_readonly_fields
-dotnet_naming_rule.private_static_readonly_fields_should_be_pascalcase.style = pascalcase
+dotnet_naming_rule.private_static_readonly_fields_should_be__camelcase.severity = suggestion # <- changed to _camelcase
+dotnet_naming_rule.private_static_readonly_fields_should_be__camelcase.symbols = private_static_readonly_fields # <- changed to _camelcase
+dotnet_naming_rule.private_static_readonly_fields_should_be__camelcase.style = _camelcase # <- changed to _camelcase
 
 dotnet_naming_rule.enums_should_be_pascalcase.severity = suggestion
 dotnet_naming_rule.enums_should_be_pascalcase.symbols = enums
@@ -376,3 +385,34 @@ dotnet_naming_style.s_camelcase.required_suffix =
 dotnet_naming_style.s_camelcase.word_separator = 
 dotnet_naming_style.s_camelcase.capitalization = camel_case
 
+#alignment preferences
+csharp_align_first_arg_by_paren = false
+csharp_align_linq_query = false
+csharp_align_multiline_argument = false
+csharp_align_multiline_array_and_object_initializer = false
+csharp_align_multiline_binary_expressions_chain = false
+csharp_align_multiline_binary_patterns = false
+csharp_align_multiline_calls_chain = false
+csharp_align_multiline_comments = true
+csharp_align_multiline_expression = false
+csharp_align_multiline_extends_list = false
+csharp_align_multiline_for_stmt = false
+csharp_align_multiline_list_pattern = false
+csharp_align_multiline_parameter = false
+csharp_align_multiline_property_pattern = false
+csharp_align_multiline_statement_conditions = false
+csharp_align_multiline_switch_expression = false
+csharp_align_multiline_type_parameter_constraints = false
+csharp_align_multiline_type_parameter_list = false
+csharp_align_multiple_declaration = false
+csharp_align_multline_type_parameter_constrains = false
+csharp_align_multline_type_parameter_list = false
+csharp_align_tuple_components = false
+csharp_indent_anonymous_method_block = false
+align_ternary = none
+
+# static fields naming override
+dotnet_naming_rule.private_static_fields_should_be_s_camelcase.style = _camelcase
+
+# local functions override
+dotnet_naming_rule.local_functions_should_be_pascalcase.style = _camelcase
