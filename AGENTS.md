@@ -11,6 +11,7 @@ The project contains the following main components:
 
 * .NET 10 and C# 14
 * ASP.NET Core with [FastEndpoints](https://fast-endpoints.com/)
+* Swagger/OpenAPI for API documentation via [SwashFastEndpoints.Swagger](https://fast-endpoints.com/docs/swagger-support)
 * Blazor WebAssembly
 * [NUnit](https://docs.nunit.org/) and [NSubstitute](https://nsubstitute.github.io/) for testing
 * [Alba](https://jasperfx.github.io/alba/) for integration testing
@@ -44,6 +45,21 @@ The project contains the following main components:
 - **Pattern matching**: Preferred over `as`/`is` with casts
 - **Variable Declarations**: Prefer `var` when the type is obvious from the right-hand side, but use explicit types when the type is not clear. Use target-typed `new` expressions where applicable.
 - **this**: don't use `this` keyword for instance members unless absolutely necessary to avoid ambiguity
+
+### Code Patterns
+
+* **Dependency Injection**: use constructor injection for dependencies, prefer interfaces for abstractions
+  * prefer automatic Lamar registration
+  * when different from the default, create registries that are to be scanned
+
+### Api Project
+* **Request/Response**: place request and response objects (REPR pattern) in the same file as the endpoint and name them after the endpoint with the `Request` and `Response`postfixes. Use records for immutability
+* **ViewModels/DTOs**: extrat complex data inside request/response into models, using records for immutability
+* **Endpoints**: Postfixes: `Listing` for returning multiple entitites, `Retrieval` for returning single entities
+  * document endpoints with Swagger annotations
+  * keep endpoint logic thin by moving actions to commands handled by the FastEndpoint's _Command Bus_
+
+### Web Project
 
 ## Testing
 - Test projects: `test/Api/Api.Tests.csproj` and `test/Web/Web.Tests.csproj`
