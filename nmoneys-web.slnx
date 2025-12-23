@@ -6,4 +6,11 @@
 	<Folder Name="/src/Web/">
 		<Project Path="src/Web/NMoneys.Web.csproj" />
 	</Folder>
+	<Folder Name="/test/" />
+	<Folder Name="/test/Api/">
+		<Project Path="test/Api/Api.Tests.csproj" />
+	</Folder>
+	<Folder Name="/test/Web/">
+		<Project Path="test/Web/Web.Tests.csproj" />
+	</Folder>
 </Solution>
