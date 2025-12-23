@@ -1,2 +1,9 @@
 <Solution>
+	<Folder Name="/src/" />
+	<Folder Name="/src/Api/">
+		<Project Path="src/Api/NMoneys.Api.csproj" />
+	</Folder>
+	<Folder Name="/src/Web/">
+		<Project Path="src/Web/NMoneys.Web.csproj" />
+	</Folder>
 </Solution>
