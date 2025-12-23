@@ -1,0 +1,6 @@
+{
+	"Configuration": {
+		"CoverageFileName": "Api.cobertura.xml",
+		"Format": "cobertura"
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"Configuration": {
+		"CoverageFileName": "Web.cobertura.xml",
+		"Format": "cobertura"
+	}
+}
