@@ -1,0 +1,54 @@
+services:
+
+  clean:
+    image: mcr.microsoft.com/dotnet/sdk:${SDK_VERSION:-10.0.101-noble}
+    volumes:
+      - ./src:/opt/nmoneys-web/src
+      - ./test:/opt/nmoneys-web/test
+    working_dir: /opt/nmoneys-web
+    command: sh -c 'find . -iname bin -o -iname obj | xargs rm -rf'
+
+  build:
+    image: mcr.microsoft.com/dotnet/sdk:${SDK_VERSION:-10.0.101-noble}
+    volumes:
+      - ./src:/opt/nmoneys-web/src
+      - ./test:/opt/nmoneys-web/test
+      - ./nmoneys-web.slnx:/opt/nmoneys-web/Net.Belt.slnx
+    working_dir: /opt/nmoneys-web
+    command: dotnet build -c Release
+
+  test:
+    image: mcr.microsoft.com/dotnet/sdk:${SDK_VERSION:-10.0.101-noble}
+    volumes:
+      - ./src:/opt/nmoneys-web/src
+      - ./test:/opt/nmoneys-web/test
+    working_dir: /opt/nmoneys-web
+    command: dotnet run --project test/Web/ -c Release -- --settings test/.runsettings --config-file test/Web/testconfig.json --coverage
+    depends_on:
+      - test-api
+
+  test-api:
+    image: mcr.microsoft.com/dotnet/sdk:${SDK_VERSION:-10.0.101-noble}
+    volumes:
+      - ./src:/opt/nmoneys-web/src
+      - ./test:/opt/nmoneys-web/test
+    working_dir: /opt/nmoneys-web
+    command: dotnet run --project test/Api/ -c Release -- --settings test/.runsettings --config-file test/Api/testconfig.json --coverage
+
+  publish-api:
+    image: mcr.microsoft.com/dotnet/sdk:${SDK_VERSION:-10.0.101-noble}
+    volumes:
+      - ./src:/opt/nmoneys-web/src
+      - ./test:/opt/nmoneys-web/test
+    working_dir: /opt/nmoneys-web
+    command: dotnet publish src/Api/ -c Release -t PublishContainer # -p ContainerArchiveOutputPath=./bin/Release/
+
+  index:
+    image: qdrant/qdrant:${QDRANT_VERSION:-v1.16.3}
+    ports:
+      - "6333:6333"
+    volumes:
+      - code_index:/qdrant/storage
+
+volumes:
+  code_index:
