@@ -416,3 +416,13 @@ dotnet_naming_rule.private_static_fields_should_be_s_camelcase.style = _camelcas
 
 # local functions override
 dotnet_naming_rule.local_functions_should_be_pascalcase.style = _camelcase
+
+# private methods override
+
+dotnet_naming_symbols.private_methods.applicable_kinds = method
+dotnet_naming_symbols.private_methods.applicable_accessibilities = private, private_protected
+dotnet_naming_symbols.private_methods.required_modifiers =
+
+dotnet_naming_rule.private_methods_should_be_camelcase.severity = suggestion
+dotnet_naming_rule.private_methods_should_be_camelcase.symbols = private_methods
+dotnet_naming_rule.private_methods_should_be_camelcase.style = camelcase

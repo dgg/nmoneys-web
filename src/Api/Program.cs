@@ -1,17 +1,39 @@
-using NMoneys;
-using NMoneys.Api.Currencies.DataTypes;
+using FastEndpoints;
+using FastEndpoints.Swagger;
+
+using Lamar.Microsoft.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Lamar for dependency injection
+builder.Host.UseLamar(registry =>
+{
+	// Auto-registration with default convention
+	registry.Scan(scanner =>
+	{
+		scanner.AssemblyContainingType<Program>();
+		scanner.LookForRegistries();
+		scanner.WithDefaultConventions();
+	});
+});
+
+builder.Services
+	.AddFastEndpoints();
+
 var app = builder.Build();
 
-app.MapGet("/", () =>
+app.UseFastEndpoints(c =>
 {
-	var snapshots = Currency.FindAll()
-		.OrderBy(c => c.AlphabeticCode, StringComparer.Ordinal)
-		.Take(5)
-		.Select(c => new CurrencySnapshot(c.AlphabeticCode, c.EnglishName, c.NativeName))
-		.ToArray();
-	return snapshots;
+	c.Endpoints.ShortNames = true;
 });
+
+// do not expose swagger in prod
+if (!app.Environment.IsProduction())
+{
+	app.UseSwaggerGen(uiConfig: ui =>
+	{
+		ui.ShowOperationIDs();
+	});
+}
 
 app.Run();
