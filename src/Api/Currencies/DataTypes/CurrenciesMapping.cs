@@ -23,6 +23,6 @@ internal sealed class CurrenciesMapping : IRegister
 		config.NewConfig<Currency, CurrencySnapshot>()
 			.Map(dest => dest.Code, src => src)
 			.Map(dest => dest.Name, src => src)
-			.Map(dest => dest.IsObsolete, src => src.IsObsolete ? (bool?)true : null);
+			.Map(dest => dest.IsObsolete, src => src.IsObsolete ? true : default(bool?));
 	}
 }

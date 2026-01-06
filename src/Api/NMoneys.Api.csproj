@@ -26,4 +26,8 @@
 		<PackageReference Include="NMoneys" Version="7.4.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Api.Tests" />
+	</ItemGroup>
+
 </Project>
