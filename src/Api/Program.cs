@@ -3,12 +3,6 @@ using FastEndpoints.Swagger;
 
 using Lamar.Microsoft.DependencyInjection;
 
-using Mapster;
-
-using Microsoft.AspNetCore.Http.Json;
-
-using NMoneys.Api.Infrastructure.Serialization;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Lamar for dependency injection
@@ -24,19 +18,7 @@ builder.Host.UseLamar(registry =>
 });
 
 builder.Services
-	.AddFastEndpoints()
-	.SwaggerDocument(o =>
-	{
-		o.ShortSchemaNames = true;
-		o.RemoveEmptyRequestSchema = true;
-		o.DocumentSettings = d =>
-		{
-			d.Title = "nMoneys API";
-			d.Version = "v1";
-			d.Description = "API for currency information retrieval";
-			d.MarkNonNullablePropsAsRequired();
-		};
-	});
+	.AddFastEndpoints();
 
 var app = builder.Build();
 
