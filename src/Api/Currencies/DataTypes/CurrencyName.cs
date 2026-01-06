@@ -5,9 +5,6 @@ namespace NMoneys.Api.Currencies.DataTypes;
 /// </summary>
 internal record CurrencyName(string English, string Native)
 {
-	public static CurrencyName Map(Currency currency)
-		=> new(currency.EnglishName, currency.NativeName);
-
 	/// <summary>Name of the currency, in English.</summary>
 	/// <example>Swiss Franc</example>
 	public string English { get; } = English;

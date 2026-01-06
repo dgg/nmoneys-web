@@ -1,0 +1,30 @@
+using Mapster;
+
+using NMoneys.Api.Currencies.DataTypes;
+
+namespace NMoneys.Api.Infrastructure.Mapping;
+
+/// <summary>
+/// Mapster configuration registry for currency-related mappings
+/// </summary>
+internal sealed class CurrencyMappingRegistry : IRegister
+{
+	public void Register(TypeAdapterConfig config)
+	{
+		// Currency -> CurrencyCode
+		config.NewConfig<Currency, CurrencyCode>()
+			.Map(dest => dest.Alphabetic, src => src.AlphabeticCode)
+			.Map(dest => dest.Numeric, src => (ushort)src.NumericCode);
+
+		// Currency -> CurrencyName
+		config.NewConfig<Currency, CurrencyName>()
+			.Map(dest => dest.English, src => src.EnglishName)
+			.Map(dest => dest.Native, src => src.NativeName);
+
+		// Currency -> CurrencySnapshot
+		config.NewConfig<Currency, CurrencySnapshot>()
+			.Map(dest => dest.Code, src => src)
+			.Map(dest => dest.Name, src => src)
+			.Map(dest => dest.IsObsolete, src => src.IsObsolete ? (bool?)true : null);
+	}
+}

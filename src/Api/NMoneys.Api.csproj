@@ -20,6 +20,7 @@
 	<ItemGroup>
 		<PackageReference Include="FastEndpoints" Version="7.1.1" />
 		<PackageReference Include="FastEndpoints.Swagger" Version="7.1.1" />
+		<PackageReference Include="Mapster" Version="7.4.0" />
 		<PackageReference Include="NMoneys" Version="7.4.0" />
 	</ItemGroup>
 

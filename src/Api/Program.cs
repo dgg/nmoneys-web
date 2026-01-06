@@ -1,11 +1,17 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 
+using Mapster;
+
 using Microsoft.AspNetCore.Http.Json;
 
 using NMoneys.Api.Infrastructure.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Mapster
+TypeAdapterConfig.GlobalSettings.Scan(typeof(Program).Assembly);
+TypeAdapterConfig.GlobalSettings.Compile();
 
 builder.Services
 	.Configure<JsonOptions>(o => SerializationContext.Default.ConfigureOptions(o.SerializerOptions))

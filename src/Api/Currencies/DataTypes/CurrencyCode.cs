@@ -5,9 +5,6 @@ namespace NMoneys.Api.Currencies.DataTypes;
 /// </summary>
 internal record CurrencyCode(string Alphabetic, ushort Numeric)
 {
-	public static CurrencyCode Map(Currency currency)
-		=> new(currency.AlphabeticCode, (ushort)currency.NumericCode);
-
 	/// <summary>3-Letter alphabetic code as per ISO 4217.</summary>
 	/// <example>CHF</example>
 	public string Alphabetic { get; } = Alphabetic;
