@@ -5,6 +5,7 @@ using NMoneys.Api.Currencies.DataTypes;
 
 namespace Api.Tests.Currencies.DataTypes;
 
+[TestFixture]
 public class CurrenciesMappingTester
 {
 	private TypeAdapterConfig _config;
