@@ -1,14 +1,12 @@
 using Mapster;
 
-using NMoneys.Api.Currencies.DataTypes;
+namespace NMoneys.Api.Currencies.DataTypes;
 
-namespace NMoneys.Api.Infrastructure.Mapping;
-
-/// <summary>
-/// Mapster configuration registry for currency-related mappings
-/// </summary>
-internal sealed class CurrencyMappingRegistry : IRegister
+internal sealed class CurrenciesMapping : IRegister
 {
+	/// <summary>
+	/// Configure mapping
+	/// </summary>
 	public void Register(TypeAdapterConfig config)
 	{
 		// Currency -> CurrencyCode

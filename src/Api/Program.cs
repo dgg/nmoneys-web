@@ -12,23 +12,18 @@ using NMoneys.Api.Infrastructure.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Lamar for dependency injection
-builder.Host.UseLamar((context, registry) =>
+builder.Host.UseLamar(registry =>
 {
 	// Auto-registration with default convention
 	registry.Scan(scanner =>
 	{
 		scanner.AssemblyContainingType<Program>();
-		scanner.WithDefaultConventions();
 		scanner.LookForRegistries();
+		scanner.WithDefaultConventions();
 	});
 });
 
-// Configure Mapster
-TypeAdapterConfig.GlobalSettings.Scan(typeof(Program).Assembly);
-TypeAdapterConfig.GlobalSettings.Compile();
-
 builder.Services
-	.Configure<JsonOptions>(o => SerializationContext.Default.ConfigureOptions(o.SerializerOptions))
 	.AddFastEndpoints()
 	.SwaggerDocument(o =>
 	{
