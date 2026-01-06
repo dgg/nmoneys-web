@@ -2,7 +2,7 @@ using FastEndpoints;
 
 using NMoneys.Api.Currencies.DataTypes;
 using NMoneys.Api.Infrastructure.Serialization;
-using NMoneys.Api.Infrastructure.Swagger;
+using NMoneys.Api.Infrastructure.OpenApi;
 
 namespace NMoneys.Api.Currencies;
 
@@ -10,7 +10,7 @@ namespace NMoneys.Api.Currencies;
 /// List of supported currencies (including obsolete ones).
 /// </summary>
 /// <param name="Currencies">Array of currency snapshots (including obsolete ones).</param>
-internal sealed record CurrenciesListingResponse(CurrencySnapshot[] Currencies) : ISwaggerSample<CurrenciesListingResponse>
+internal sealed record CurrenciesListingResponse(CurrencySnapshot[] Currencies) : IOpenApiSample<CurrenciesListingResponse>
 {
 	public static CurrenciesListingResponse Example { get; } = new([CurrencySnapshot.Example]);
 }

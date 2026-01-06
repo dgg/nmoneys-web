@@ -2,12 +2,12 @@ using FastEndpoints.Swagger;
 
 using Lamar;
 
-namespace NMoneys.Api.Infrastructure.Swagger;
+namespace NMoneys.Api.Infrastructure.OpenApi;
 
 // configure swagger
-public class SwaggerRegistry : ServiceRegistry
+public class OpenApiRegistry : ServiceRegistry
 {
-	public SwaggerRegistry()
+	public OpenApiRegistry()
 	{
 		this.SwaggerDocument(o =>
 		{
