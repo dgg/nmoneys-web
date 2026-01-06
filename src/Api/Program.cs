@@ -1,17 +1,37 @@
-using NMoneys;
-using NMoneys.Api.Currencies.DataTypes;
+using FastEndpoints;
+using FastEndpoints.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+	.AddFastEndpoints()
+	.SwaggerDocument(o =>
+	{
+		o.ShortSchemaNames = true;
+		o.RemoveEmptyRequestSchema = true;
+		o.DocumentSettings = d =>
+		{
+			d.Title = "NMoneys API";
+			d.Version = "v1";
+			d.Description = "API for currency information retrieval";
+			d.MarkNonNullablePropsAsRequired();
+		};
+	});
+
 var app = builder.Build();
 
-app.MapGet("/", () =>
+app.UseFastEndpoints(c =>
 {
-	var snapshots = Currency.FindAll()
-		.OrderBy(c => c.AlphabeticCode, StringComparer.Ordinal)
-		.Take(5)
-		.Select(c => new CurrencySnapshot(c.AlphabeticCode, c.EnglishName, c.NativeName))
-		.ToArray();
-	return snapshots;
+	c.Endpoints.ShortNames = true;
 });
+
+// Use Swagger only in dev
+if (app.Environment.IsDevelopment())
+{
+	app.UseSwaggerGen(uiConfig: ui =>
+	{
+		ui.ShowOperationIDs();
+	});
+}
 
 app.Run();
