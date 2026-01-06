@@ -27,8 +27,8 @@ app.UseFastEndpoints(c =>
 	c.Endpoints.ShortNames = true;
 });
 
-// Use Swagger only in dev
-if (app.Environment.IsDevelopment())
+// do not expose swagger in prod
+if (!app.Environment.IsProduction())
 {
 	app.UseSwaggerGen(uiConfig: ui =>
 	{
