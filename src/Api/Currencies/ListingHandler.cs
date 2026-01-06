@@ -14,9 +14,8 @@ internal class ListingHandler : ICommandHandler<ListCurrencies, CurrenciesListin
 	{
 		var snapshots = Currency.FindAll()
 			.OrderBy(c => c.AlphabeticCode, StringComparer.Ordinal)
-			.Take(5)
-			.Select(c => c.Adapt<CurrencySnapshot>())
-			.ToArray();
+			.Adapt<CurrencySnapshot[]>();
+		
 		return Task.FromResult(new CurrenciesListingResponse(snapshots));
 	}
 }
