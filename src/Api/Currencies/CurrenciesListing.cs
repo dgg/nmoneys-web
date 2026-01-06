@@ -1,7 +1,5 @@
 using FastEndpoints;
 
-using Mapster;
-
 using NMoneys.Api.Currencies.DataTypes;
 using NMoneys.Api.Infrastructure.Serialization;
 using NMoneys.Api.Infrastructure.Swagger;
@@ -34,12 +32,8 @@ internal sealed class CurrenciesListing : EndpointWithoutRequest<CurrenciesListi
 
 	public override async Task HandleAsync(CancellationToken ct)
 	{
-		var snapshots = Currency.FindAll()
-			.OrderBy(c => c.AlphabeticCode, StringComparer.Ordinal)
-			.Take(5)
-			.Select(c => c.Adapt<CurrencySnapshot>())
-			.ToArray();
-
-		await Send.OkAsync(new CurrenciesListingResponse(snapshots), ct);
+		var command = new ListCurrencies();
+		var response = await command.ExecuteAsync(ct);
+		await Send.OkAsync(response, ct);
 	}
 }
