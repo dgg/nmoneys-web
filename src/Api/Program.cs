@@ -1,9 +1,14 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 
+using Microsoft.AspNetCore.Http.Json;
+
+using NMoneys.Api.Infrastructure.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+	.Configure<JsonOptions>(o => SerializationContext.Default.ConfigureOptions(o.SerializerOptions))
 	.AddFastEndpoints()
 	.SwaggerDocument(o =>
 	{
@@ -11,7 +16,7 @@ builder.Services
 		o.RemoveEmptyRequestSchema = true;
 		o.DocumentSettings = d =>
 		{
-			d.Title = "NMoneys API";
+			d.Title = "nMoneys API";
 			d.Version = "v1";
 			d.Description = "API for currency information retrieval";
 			d.MarkNonNullablePropsAsRequired();

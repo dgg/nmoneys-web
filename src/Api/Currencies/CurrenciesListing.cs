@@ -1,5 +1,6 @@
 using FastEndpoints;
 using NMoneys.Api.Currencies.DataTypes;
+using NMoneys.Api.Infrastructure.Serialization;
 using NMoneys.Api.Infrastructure.Swagger;
 
 namespace NMoneys.Api.Currencies;
