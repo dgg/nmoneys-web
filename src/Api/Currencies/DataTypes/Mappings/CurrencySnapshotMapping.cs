@@ -10,8 +10,7 @@ internal sealed class CurrencySnapshotMapping : IRegister
 	public void Register(TypeAdapterConfig config)
 	{
 		config.NewConfig<Currency, CurrencySnapshot>()
-			.Map(dest => dest.Code, src => src)
-			.Map(dest => dest.Name, src => src)
+			// name and code are auto-mapped
 			.Map(dest => dest.IsObsolete, src => src.IsObsolete ? true : default(bool?));
 	}
 }

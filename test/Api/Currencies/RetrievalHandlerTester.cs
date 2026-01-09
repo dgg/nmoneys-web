@@ -26,8 +26,8 @@ public class RetrievalHandlerTester
 		Assert.Multiple(() =>
 		{
 			Assert.That(response.Currency, Is.Not.Null);
-			Assert.That(response.Currency.Code, Is.EqualTo(new ExtendedCodes("CHF", 756, "756")));
-			Assert.That(response.Currency.Name,
+			Assert.That(response.Currency.Codes, Is.EqualTo(new CurrencyCodes("CHF", 756, "756")));
+			Assert.That(response.Currency.Names,
 				Is.EqualTo(new CurrencyNames("Swiss Franc", "Schweizer Franken")));
 			Assert.That(response.Currency.Symbol, Is.EqualTo("Fr."));
 			Assert.That(response.Currency.SignificantDigits, Is.EqualTo(2));

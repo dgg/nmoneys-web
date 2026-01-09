@@ -11,33 +11,22 @@ namespace Api.Tests.Currencies.DataTypes.Mappings;
 [TestFixture]
 public class CurrencySnapshotMappingTester : MappingTesterBase
 {
-	protected override IRegister[] Mappings =>
-		[new CurrencySnapshotMapping(), new CurrencyNameMapping(), new SnapshotCodesMapping()];
+	protected override IRegister[] Mappings => [new CurrencySnapshotMapping()];
 
 	[Test]
-	public void Adapt_Snapshot_MapsCodes()
+	public void Adapt_Snapshot_MapsAlphabeticCode()
 	{
 		var result = Currency.Eur.Adapt<CurrencySnapshot>(Config);
 
-		Assert.That(result.Code, Is.Not.Null);
-		Assert.Multiple(() =>
-		{
-			Assert.That(result.Code.Alphabetic, Is.EqualTo("EUR"));
-			Assert.That(result.Code.Numeric, Is.EqualTo(978));
-		});
+		Assert.That(result.AlphabeticCode, Is.EqualTo("EUR"));
 	}
 
 	[Test]
-	public void Adapt_Snapshot_MapsNames()
+	public void Adapt_Snapshot_MapsEnglishName()
 	{
 		var result = Currency.Chf.Adapt<CurrencySnapshot>(Config);
 
-		Assert.That(result.Name, Is.Not.Null);
-		using (Assert.EnterMultipleScope())
-		{
-			Assert.That(result.Name.English, Is.EqualTo("Swiss Franc"));
-			Assert.That(result.Name.Native, Is.EqualTo("Schweizer Franken"));
-		}
+		Assert.That(result.EnglishName, Is.EqualTo("Swiss Franc"));
 	}
 
 	[Test]

@@ -25,13 +25,13 @@ public class CurrencyRetrievalTester
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(currency.TryGetProperty("code", out var code), Is.True);
-			Assert.That(code.GetProperty("alphabetic").GetString(), Is.EqualTo("CHF"));
-			Assert.That(code.GetProperty("numeric").GetInt32(), Is.EqualTo(756));
+			Assert.That(currency.TryGetProperty("codes", out var codes), Is.True);
+			Assert.That(codes.GetProperty("alphabetic").GetString(), Is.EqualTo("CHF"));
+			Assert.That(codes.GetProperty("numeric").GetInt32(), Is.EqualTo(756));
 
-			Assert.That(currency.TryGetProperty("name", out var name), Is.True);
-			Assert.That(name.GetProperty("english").GetString(), Is.EqualTo("Swiss Franc"));
-			Assert.That(name.GetProperty("native").GetString(), Is.EqualTo("Schweizer Franken"));
+			Assert.That(currency.TryGetProperty("names", out var names), Is.True);
+			Assert.That(names.GetProperty("english").GetString(), Is.EqualTo("Swiss Franc"));
+			Assert.That(names.GetProperty("native").GetString(), Is.EqualTo("Schweizer Franken"));
 
 			Assert.That(currency.TryGetProperty("symbol", out var symbol), Is.True);
 			Assert.That(symbol.GetString(), Is.EqualTo("Fr."));
@@ -63,7 +63,7 @@ public class CurrencyRetrievalTester
 
 		Assert.That(response, Is.Not.Null);
 		Assert.That(response.RootElement.TryGetProperty("currency", out var currency), Is.True);
-		Assert.That(currency.GetProperty("code").GetProperty("alphabetic").GetString(), Is.EqualTo("EUR"));
+		Assert.That(currency.GetProperty("codes").GetProperty("alphabetic").GetString(), Is.EqualTo("EUR"));
 	}
 
 	[Test, CancelAfter(2000)]
@@ -100,8 +100,8 @@ public class CurrencyRetrievalTester
 		Assert.That(root.TryGetProperty("currency", out var currency), Is.True);
 
 		// Currency must have required properties
-		Assert.That(currency.TryGetProperty("code", out _), Is.True);
-		Assert.That(currency.TryGetProperty("name", out _), Is.True);
+		Assert.That(currency.TryGetProperty("codes", out _), Is.True);
+		Assert.That(currency.TryGetProperty("names", out _), Is.True);
 		Assert.That(currency.TryGetProperty("symbol", out _), Is.True);
 		Assert.That(currency.TryGetProperty("significant_digits", out _), Is.True);
 		Assert.That(currency.TryGetProperty("is_obsolete", out _), Is.True);

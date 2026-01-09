@@ -42,10 +42,9 @@ public class CurrenciesTester
 	private static void assertSortedCurrencies(JsonElement currencies)
 	{
 		var alphaCodes = currencies.EnumerateArray()
-			.Select(c => c.GetProperty("code"))
-			.Select(c => c.GetProperty("alphabetic"))
+			.Select(c => c.GetProperty("alphabetic_code"))
 			.Select(c => c.GetString()!);
-		Assert.That(alphaCodes, Is.Ordered.Ascending, 
+		Assert.That(alphaCodes, Is.Ordered.Ascending,
 			"sorted by alphabetic code");
 	}
 
@@ -57,8 +56,8 @@ public class CurrenciesTester
 	
 	private static void assertSnapshotProps(JsonElement snapshot)
 	{
-		Assert.That(snapshot, Haz.Prop("code"));
-		Assert.That(snapshot, Haz.Prop("name"));
+		Assert.That(snapshot, Haz.Prop("alphabetic_code"));
+		Assert.That(snapshot, Haz.Prop("english_name"));
 	}
 	
 	[Test , CancelAfter(2000)]
@@ -105,19 +104,19 @@ public class CurrenciesTester
 
 	private static void assertExtendedCode(JsonElement currency)
 	{
-		var code = currency.GetProperty("code");
-		Assert.That(code.ValueKind, Is.EqualTo(JsonValueKind.Object), "currency.code{}");
-		Assert.That(code, Haz.Prop("alphabetic"));
-		Assert.That(code, Haz.Prop("numeric"));
-		Assert.That(code, Haz.Prop("padded"));
+		var codes = currency.GetProperty("codes");
+		Assert.That(codes.ValueKind, Is.EqualTo(JsonValueKind.Object), "currency.codes{}");
+		Assert.That(codes, Haz.Prop("alphabetic"));
+		Assert.That(codes, Haz.Prop("numeric"));
+		Assert.That(codes, Haz.Prop("padded"));
 	}
 	
 	private static void assertName(JsonElement currency)
 	{
-		var code = currency.GetProperty("name");
-		Assert.That(code.ValueKind, Is.EqualTo(JsonValueKind.Object), "currency.name{}");
-		Assert.That(code, Haz.Prop("english"));
-		Assert.That(code, Haz.Prop("native"));
+		var names = currency.GetProperty("names");
+		Assert.That(names.ValueKind, Is.EqualTo(JsonValueKind.Object), "currency.names{}");
+		Assert.That(names, Haz.Prop("english"));
+		Assert.That(names, Haz.Prop("native"));
 	}
 	
 	private static void assertDetailProps(JsonElement currency)

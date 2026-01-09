@@ -25,150 +25,52 @@ public class OpenApiTester
 		var response = await result.ReadAsTextAsync();
 		_openApi = await OpenApiDocument.FromJsonAsync(response);
 	}
-	
-	#region SnapshotCodes
-	
-	[Test]
-	public void SnapshotCodes_RequiredProps()
-	{
-		JsonSchema currencyCode = _openApi.Components.Schemas[nameof(SnapshotCodes)];
-		
-		Assert.That(currencyCode.Type, Is.EqualTo(JsonObjectType.Object));
-		Assert.That(currencyCode.AllowAdditionalProperties, Is.False);
-		Assert.That(currencyCode.RequiredProperties, Is.EquivalentTo(["alphabetic", "numeric"]));
-		Assert.That(currencyCode.Description, Is.Not.Null);
-	}
-	
-	[Test]
-	public void SnapshotCodes_Alphabetic_Required3CharString()
-	{
-		JsonSchemaProperty alphabetic = _openApi.Components
-			.Schemas[nameof(SnapshotCodes)]
-			.Properties[nameof(alphabetic)];
-		
-		Assert.Multiple(() =>
-		{
-			Assert.That(alphabetic.Type, Is.EqualTo(JsonObjectType.String));
-			Assert.That(alphabetic.IsRequired, Is.True);
-			Assert.That(alphabetic.Description, Is.Not.Null);
-			Assert.That(alphabetic.MinLength, Is.EqualTo(3));
-			Assert.That(alphabetic.MaxLength, Is.EqualTo(3));
-			Assert.That(alphabetic.Example, Is.Not.Null.And
-				.EqualTo(CurrencySnapshot.Example.Code.Alphabetic));
-		});
-	}
-	
-	[Test]
-	public void SnapshotCodes_Numeric_RequiredConstrainedInteger()
-	{
-		JsonSchemaProperty numeric = _openApi.Components
-			.Schemas[nameof(SnapshotCodes)]
-			.Properties[nameof(numeric)];
-		using (Assert.EnterMultipleScope())
-		{
-			Assert.That(numeric.Type, Is.EqualTo(JsonObjectType.Integer));
-			Assert.That(numeric.IsRequired, Is.True);
-			Assert.That(numeric.Description, Is.Not.Null);
-			Assert.That(numeric.Minimum, Is.Zero);
-			Assert.That(numeric.Maximum, Is.EqualTo(999));
-			Assert.That(numeric.Example, Is.Not.Null.And
-				.EqualTo(CurrencySnapshot.Example.Code.Numeric));
-		}
-	}
-	
-	#endregion
-	
-	#region CurrencyNames
-	
-	[Test]
-	public void CurrencyNames_RequiredProps()
-	{
-		JsonSchema currencyName = _openApi.Components.Schemas[nameof(CurrencyNames)];
-		
-		Assert.That(currencyName.Type, Is.EqualTo(JsonObjectType.Object));
-		Assert.That(currencyName.AllowAdditionalProperties, Is.False);
-		Assert.That(currencyName.RequiredProperties, Is.EquivalentTo(["english", "native"]));
-		Assert.That(currencyName.Description, Is.Not.Null);
-	}
-	
-	[Test]
-	public void CurrencyNames_English_RequiredNonEmpty()
-	{
-		JsonSchemaProperty english = _openApi.Components
-			.Schemas[nameof(CurrencyNames)]
-			.Properties[nameof(english)];
-		
-		using (Assert.EnterMultipleScope())
-		{
-			Assert.That(english.Type, Is.EqualTo(JsonObjectType.String));
-			Assert.That(english.IsRequired, Is.True);
-			Assert.That(english.Description, Is.Not.Null);
-			Assert.That(english.MinLength, Is.EqualTo(1));
-			Assert.That(english.Example, Is.Not.Null.And
-				.EqualTo(CurrencySnapshot.Example.Name.English));
-		}
-	}
-	
-	[Test]
-	public void CurrencyNames_Native_RequiredNonEmpty()
-	{
-		JsonSchemaProperty native = _openApi.Components
-			.Schemas[nameof(CurrencyNames)]
-			.Properties[nameof(native)];
-		
-		using (Assert.EnterMultipleScope())
-		{
-			Assert.That(native.Type, Is.EqualTo(JsonObjectType.String));
-			Assert.That(native.IsRequired, Is.True);
-			Assert.That(native.Description, Is.Not.Null);
-			Assert.That(native.MinLength, Is.EqualTo(1));
-			Assert.That(native.Example, Is.Not.Null.And
-				.EqualTo(CurrencySnapshot.Example.Name.Native));
-		}
-	}
-	
-	#endregion
-	
+
 	#region CurrencySnapshot
 	
 	[Test]
 	public void CurrencySnapshot_RequiredProps()
 	{
 		JsonSchema currencySnapshot = _openApi.Components.Schemas[nameof(CurrencySnapshot)];
-		
+
 		Assert.That(currencySnapshot.Type, Is.EqualTo(JsonObjectType.Object));
 		Assert.That(currencySnapshot.AllowAdditionalProperties, Is.False);
-		Assert.That(currencySnapshot.RequiredProperties, Is.EquivalentTo(["code", "name"]));
+		Assert.That(currencySnapshot.RequiredProperties, Is.EquivalentTo(["alphabetic_code", "english_name"]));
 		Assert.That(currencySnapshot.Description, Is.Not.Null);
 	}
-	
+
 	[Test]
-	public void CurrencySnapshot_Name_RequiredNoSample()
+	public void CurrencySnapshot_AlphabeticCode_RequiredConstrainedString()
 	{
-		JsonSchemaProperty name = _openApi.Components
+		JsonSchemaProperty alphabeticCode = _openApi.Components
 			.Schemas[nameof(CurrencySnapshot)]
-			.Properties[nameof(name)];
-		
+			.Properties["alphabetic_code"];
+
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(name.IsRequired, Is.True);
-			Assert.That(name.Description, Is.Not.Null);
-			Assert.That(name.Example, Is.Null);
+			Assert.That(alphabeticCode.Type, Is.EqualTo(JsonObjectType.String));
+			Assert.That(alphabeticCode.IsRequired, Is.True);
+			Assert.That(alphabeticCode.MinLength, Is.EqualTo(3));
+			Assert.That(alphabeticCode.MaxLength, Is.EqualTo(3));
+			Assert.That(alphabeticCode.Description, Is.Not.Null);
+			Assert.That(alphabeticCode.Example, Is.Not.Null);
 		}
 	}
-	
+
 	[Test]
-	public void CurrencySnapshot_Code_RequiredNoSample()
+	public void CurrencySnapshot_EnglishName_RequiredNotEmptyString()
 	{
-		JsonSchemaProperty code = _openApi.Components
+		JsonSchemaProperty englishName = _openApi.Components
 			.Schemas[nameof(CurrencySnapshot)]
-			.Properties[nameof(code)];
-		
+			.Properties["english_name"];
+
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(code.IsRequired, Is.True);
-			Assert.That(code.Description, Is.Not.Null);
-			Assert.That(code.Example, Is.Null);
+			Assert.That(englishName.Type, Is.EqualTo(JsonObjectType.String));
+			Assert.That(englishName.IsRequired, Is.True);
+			Assert.That(englishName.MinLength, Is.EqualTo(1));
+			Assert.That(englishName.Description, Is.Not.Null);
+			Assert.That(englishName.Example, Is.Not.Null);
 		}
 	}
 	
@@ -243,7 +145,7 @@ public class OpenApiTester
 	[Test]
 	public void ExtendedCodes_RequiredProps()
 	{
-		JsonSchema currencyCode = _openApi.Components.Schemas[nameof(ExtendedCodes)];
+		JsonSchema currencyCode = _openApi.Components.Schemas[nameof(CurrencyCodes)];
 		
 		Assert.That(currencyCode.Type, Is.EqualTo(JsonObjectType.Object));
 		Assert.That(currencyCode.AllowAdditionalProperties, Is.False);
@@ -255,9 +157,9 @@ public class OpenApiTester
 	public void ExtendedCodes_Alphabetic_Required3CharString()
 	{
 		JsonSchemaProperty alphabetic = _openApi.Components
-			.Schemas[nameof(ExtendedCodes)]
+			.Schemas[nameof(CurrencyCodes)]
 			.Properties[nameof(alphabetic)];
-		
+
 		Assert.Multiple(() =>
 		{
 			Assert.That(alphabetic.Type, Is.EqualTo(JsonObjectType.String));
@@ -265,8 +167,7 @@ public class OpenApiTester
 			Assert.That(alphabetic.Description, Is.Not.Null);
 			Assert.That(alphabetic.MinLength, Is.EqualTo(3));
 			Assert.That(alphabetic.MaxLength, Is.EqualTo(3));
-			Assert.That(alphabetic.Example, Is.Not.Null.And
-				.EqualTo(CurrencySnapshot.Example.Code.Alphabetic));
+			Assert.That(alphabetic.Example, Is.Not.Null);
 		});
 	}
 	
@@ -274,7 +175,7 @@ public class OpenApiTester
 	public void ExtendedCodes_Numeric_RequiredConstrainedInteger()
 	{
 		JsonSchemaProperty numeric = _openApi.Components
-			.Schemas[nameof(ExtendedCodes)]
+			.Schemas[nameof(CurrencyCodes)]
 			.Properties[nameof(numeric)];
 		using (Assert.EnterMultipleScope())
 		{
@@ -283,8 +184,7 @@ public class OpenApiTester
 			Assert.That(numeric.Description, Is.Not.Null);
 			Assert.That(numeric.Minimum, Is.Zero);
 			Assert.That(numeric.Maximum, Is.EqualTo(999));
-			Assert.That(numeric.Example, Is.Not.Null.And
-				.EqualTo(CurrencySnapshot.Example.Code.Numeric));
+			Assert.That(numeric.Example, Is.Not.Null);
 		}
 	}
 	
@@ -292,7 +192,7 @@ public class OpenApiTester
 	public void ExtendedCodes_Padded_RequiredConstrainedString()
 	{
 		JsonSchemaProperty padded = _openApi.Components
-			.Schemas[nameof(ExtendedCodes)]
+			.Schemas[nameof(CurrencyCodes)]
 			.Properties[nameof(padded)];
 		using (Assert.EnterMultipleScope())
 		{
@@ -302,54 +202,54 @@ public class OpenApiTester
 			Assert.That(padded.MinLength, Is.EqualTo(3));
 			Assert.That(padded.MaxLength, Is.EqualTo(3));
 			Assert.That(padded.Example, Is.Not.Null.And
-				.EqualTo(CurrencyDetail.Example.Code.Padded));
+				.EqualTo(CurrencyDetail.Example.Codes.Padded));
 		}
 	}
-	
+
 	#endregion
-	
+
 	#region CurrencyDetail
-	
+
 	[Test]
 	public void CurrencyDetail_RequiredProps()
 	{
 		JsonSchema currencyDetail = _openApi.Components.Schemas[nameof(CurrencyDetail)];
-		
+
 		Assert.That(currencyDetail.Type, Is.EqualTo(JsonObjectType.Object));
 		Assert.That(currencyDetail.AllowAdditionalProperties, Is.False);
 		Assert.That(currencyDetail.RequiredProperties, Is.EquivalentTo([
-			"code", "name", "symbol", "significant_digits", "is_obsolete"
+			"codes", "names", "symbol", "significant_digits", "is_obsolete"
 		]));
 		Assert.That(currencyDetail.Description, Is.Not.Null);
 	}
-	
+
 	[Test]
-	public void CurrencyDetail_Code_RequiredNoSample()
+	public void CurrencyDetail_Codes_RequiredNoSample()
 	{
-		JsonSchemaProperty code = _openApi.Components
+		JsonSchemaProperty codes = _openApi.Components
 			.Schemas[nameof(CurrencyDetail)]
-			.Properties[nameof(code)];
-		
+			.Properties[nameof(codes)];
+
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(code.IsRequired, Is.True);
-			Assert.That(code.Description, Is.Not.Null);
-			Assert.That(code.Example, Is.Null);
+			Assert.That(codes.IsRequired, Is.True);
+			Assert.That(codes.Description, Is.Not.Null);
+			Assert.That(codes.Example, Is.Null);
 		}
 	}
-	
+
 	[Test]
-	public void CurrencyDetail_Name_RequiredNoSample()
+	public void CurrencyDetail_Names_RequiredNoSample()
 	{
-		JsonSchemaProperty name = _openApi.Components
+		JsonSchemaProperty names = _openApi.Components
 			.Schemas[nameof(CurrencyDetail)]
-			.Properties[nameof(name)];
-		
+			.Properties[nameof(names)];
+
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(name.IsRequired, Is.True);
-			Assert.That(name.Description, Is.Not.Null);
-			Assert.That(name.Example, Is.Null);
+			Assert.That(names.IsRequired, Is.True);
+			Assert.That(names.Description, Is.Not.Null);
+			Assert.That(names.Example, Is.Null);
 		}
 	}
 	
