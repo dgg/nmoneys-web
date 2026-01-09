@@ -5,7 +5,7 @@ namespace NMoneys.Api.Currencies.DataTypes;
 /// <summary>
 /// ISO 4217 codes for the currency.
 /// </summary>
-internal record CurrencyCode(string Alphabetic, ushort Numeric)
+internal record SnapshotCodes(string Alphabetic, ushort Numeric)
 {
 	/// <summary>3-Letter alphabetic code as per ISO 4217.</summary>
 	/// <example>CHF</example>

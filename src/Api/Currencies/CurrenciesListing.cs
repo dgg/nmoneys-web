@@ -33,7 +33,7 @@ internal sealed class CurrenciesListing : EndpointWithoutRequest<CurrenciesListi
 	public override async Task HandleAsync(CancellationToken ct)
 	{
 		var command = new ListCurrencies();
-		var response = await command.ExecuteAsync(ct);
+		CurrenciesListingResponse response = await command.ExecuteAsync(ct);
 		await Send.OkAsync(response, ct);
 	}
 }

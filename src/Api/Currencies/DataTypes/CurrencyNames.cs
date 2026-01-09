@@ -5,7 +5,7 @@ namespace NMoneys.Api.Currencies.DataTypes;
 /// <summary>
 /// Names of the currency.
 /// </summary>
-internal record CurrencyName(string English, string Native)
+internal record CurrencyNames(string English, string Native)
 {
 	/// <summary>Name of the currency, in English.</summary>
 	/// <example>Swiss Franc</example>
