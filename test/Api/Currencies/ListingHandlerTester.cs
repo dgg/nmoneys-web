@@ -21,10 +21,10 @@ public class ListingHandlerTester
 	public async Task ExecuteAsync_SnapshotsSortedByAscendingAlphabeticCode()
 	{
 		var subject = new Subject();
-		
+
 		var response = await subject.ExecuteAsync(new ListCurrencies(), CancellationToken.None);
 
-		var byAlphaCode = response.Currencies.Select(c => c.Code.Alphabetic);
+		var byAlphaCode = response.Currencies.Select(c => c.AlphabeticCode);
 		Assert.That(byAlphaCode, Is.Ordered.Ascending);
 	}
 	

@@ -25,6 +25,7 @@ var app = builder.Build();
 app.UseFastEndpoints(c =>
 {
 	c.Endpoints.ShortNames = true;
+	c.Errors.UseProblemDetails();
 });
 
 // do not expose swagger in prod
