@@ -34,7 +34,7 @@ internal sealed class CurrencyRetrieval : Endpoint<CurrencyRetrievalRequest, Res
 		{
 			s.Summary = "Get currency details";
 			s.Description = "Retrieves detailed information about a specific currency by its ISO code.";
-			s.Params["code"] = "ISO 4217 currency code (e.g., USD, EUR, CHF)";
+			s.RequestParam(x => x.AlphabeticCode, "ISO 4217 currency code (e.g., USD, EUR, CHF)");
 			s.Response(200, "Currency details", example: CurrencyRetrievalResponse.Example);
 		});
 	}
