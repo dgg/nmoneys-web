@@ -13,6 +13,8 @@ namespace NMoneys.Api.Infrastructure.Serialization;
 	UseStringEnumConverter = true)]
 [JsonSerializable(typeof(CurrenciesListingResponse))]
 [JsonSerializable(typeof(CurrencyRetrievalResponse))]
+[JsonSerializable(typeof(AmountsFormattingRequest))]
+[JsonSerializable(typeof(AmountsFormattingResponse))]
 [JsonSerializable(typeof(ProblemDetails))]
 internal partial class SerializationContext : JsonSerializerContext
 {
