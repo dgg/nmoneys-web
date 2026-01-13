@@ -336,4 +336,78 @@ public class OpenApiTester
 	}
 	
 	#endregion
+
+	#region AmountsFormattingRequest
+
+	[Test]
+	public void AmountsFormattingRequest_RequiredProps()
+	{
+		JsonSchema request = _openApi.Components.Schemas[nameof(AmountsFormattingRequest)];
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(request.Type, Is.EqualTo(JsonObjectType.Object));
+			Assert.That(request.AllowAdditionalProperties, Is.False);
+			Assert.That(request.RequiredProperties, Is.EquivalentTo(["amounts"]));
+			Assert.That(request.Description, Is.Not.Null);
+		});
+	}
+
+	[Test]
+	public void AmountsFormattingRequest_Amounts_RequiredArrayWithMinLength()
+	{
+		JsonSchemaProperty amounts = _openApi.Components
+			.Schemas[nameof(AmountsFormattingRequest)]
+			.Properties[nameof(amounts)];
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(amounts.Type, Is.EqualTo(JsonObjectType.Array));
+			Assert.That(amounts.IsRequired, Is.True);
+			Assert.That(amounts.Description, Is.Not.Null);
+			Assert.That(amounts.MinItems, Is.EqualTo(1));
+			Assert.That(amounts.Item, Is.Not.Null);
+			Assert.That(amounts.Item!.Type, Is.EqualTo(JsonObjectType.Number));
+			Assert.That(amounts.Example, Is.Null);
+		});
+	}
+
+	#endregion
+
+	#region AmountsFormattingResponse
+
+	[Test]
+	public void AmountsFormattingResponse_RequiredProps()
+	{
+		JsonSchema response = _openApi.Components.Schemas[nameof(AmountsFormattingResponse)];
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(response.Type, Is.EqualTo(JsonObjectType.Object));
+			Assert.That(response.AllowAdditionalProperties, Is.False);
+			Assert.That(response.RequiredProperties, Is.EquivalentTo(["formatted"]));
+			Assert.That(response.Description, Is.Not.Null);
+		});
+	}
+
+	[Test]
+	public void AmountsFormattingResponse_Formatted_RequiredNotEmptyArray()
+	{
+		JsonSchemaProperty formatted = _openApi.Components
+			.Schemas[nameof(AmountsFormattingResponse)]
+			.Properties[nameof(formatted)];
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(formatted.Type, Is.EqualTo(JsonObjectType.Array));
+			Assert.That(formatted.IsRequired, Is.True);
+			Assert.That(formatted.Description, Is.Not.Null);
+			Assert.That(formatted.MinItems, Is.EqualTo(1));
+			Assert.That(formatted.Item, Is.Not.Null);
+			Assert.That(formatted.Item!.Type, Is.EqualTo(JsonObjectType.String));
+			Assert.That(formatted.Example, Is.Null);
+		});
+	}
+
+	#endregion
 }
