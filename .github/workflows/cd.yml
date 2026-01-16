@@ -1,0 +1,39 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  deploy-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and publish API container
+        run: |
+          dotnet publish \
+            ${{ github.workspace }}/src/Api/ \
+            --configuration Release \
+            --target PublishContainer \
+            -p:ContainerRegistry=ghcr.io \
+            -p:ContainerRepository=${{ github.repository_owner }}/nmoneys-api
+
+      - name: Log out from GitHub Container Registry
+        if: always()
+        run: docker logout ghcr.io
