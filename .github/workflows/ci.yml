@@ -34,7 +34,7 @@ jobs:
     - name: Run tests with code coverage
       run: |
         dotnet test \
-          --no-build \
+          --no-restore --no-build \
           --configuration Release \
           --coverage \
           --settings ${{ github.workspace }}/test/.runsettings \
