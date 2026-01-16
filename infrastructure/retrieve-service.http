@@ -1,0 +1,5 @@
+@service_id = srv-d5jpu0qli9vc73bkjq10
+
+GET https://api.render.com/v1/services/{{service_id}}
+Accept: application/json
+Authorization: Bearer {{$dotenv RENDER_API_KEY}}
