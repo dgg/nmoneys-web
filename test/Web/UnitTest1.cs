@@ -1,12 +1,8 @@
 ﻿namespace Web.Tests;
 
-public class Tests
+[TestFixture]
+public class SampleTester
 {
-	[SetUp]
-	public void Setup()
-	{
-	}
-
 	[Test]
 	public void Test1()
 	{
