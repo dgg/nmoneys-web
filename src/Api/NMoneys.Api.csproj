@@ -34,8 +34,8 @@
 		<RuntimeIdentifiers>linux-arm64;linux-x64</RuntimeIdentifiers>
 		<InvariantGlobalization>True</InvariantGlobalization>
 		<SelfContained>False</SelfContained>
-		<Version>0.9.2</Version>
-		<ContainerImageTags>0.9.2</ContainerImageTags>
+		<Version>1.0.0</Version>
+		<ContainerImageTags>1.0.0;latest</ContainerImageTags>
 		<ContainerRuntimeIdentifiers>linux-arm64;linux-x64</ContainerRuntimeIdentifiers>
 		<ContainerFamily>noble-chiseled</ContainerFamily>
 		<ContainerImageFormat>OCI</ContainerImageFormat>
