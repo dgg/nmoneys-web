@@ -25,7 +25,7 @@ jobs:
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and publish API container
+      - name: Build and publish API image
         run: |
           dotnet publish \
             ${{ github.workspace }}/src/Api/ \
@@ -33,6 +33,27 @@ jobs:
             --target PublishContainer \
             -p:ContainerRegistry=ghcr.io \
             -p:ContainerRepository=${{ github.repository_owner }}/nmoneys-api
+
+      - name: Deploy API container
+        env:
+          DEPLOY_URL: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: curl "$DEPLOY_URL"
+
+      - name: Run tests with code coverage
+        run: |
+          dotnet test \
+          --configuration Release \
+          --coverage \
+          --settings ${{ github.workspace }}/test/.runsettings \
+          --config-file ${{ github.workspace }}/test/testconfig.json
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: dgg/nmoneys-web
+          disable_search: true
+          files: ${{ github.workspace }}/test/*/bin/Release/*/TestResults/*.cobertura.xml
 
       - name: Log out from GitHub Container Registry
         if: always()
