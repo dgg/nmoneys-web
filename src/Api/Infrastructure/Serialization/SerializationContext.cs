@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -16,6 +17,7 @@ namespace NMoneys.Api.Infrastructure.Serialization;
 [JsonSerializable(typeof(AmountsFormattingRequest))]
 [JsonSerializable(typeof(AmountsFormattingResponse))]
 [JsonSerializable(typeof(ProblemDetails))]
+[ExcludeFromCodeCoverage]
 internal partial class SerializationContext : JsonSerializerContext
 {
 	public void ConfigureOptions(JsonSerializerOptions options)
