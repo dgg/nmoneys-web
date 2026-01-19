@@ -47,13 +47,13 @@ jobs:
           --settings ${{ github.workspace }}/test/.runsettings \
           --config-file ${{ github.workspace }}/test/testconfig.json
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+      - name: Upload coverage reports to Coveralls
+        uses: coverallsapp/github-action@v2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: dgg/nmoneys-web
-          disable_search: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          format: cobertura
           files: ${{ github.workspace }}/test/*/bin/Release/*/TestResults/*.cobertura.xml
+          allow-empty: true
 
       - name: Log out from GitHub Container Registry
         if: always()
