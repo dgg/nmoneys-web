@@ -1,0 +1,12 @@
+// use request-management-token.http to get a valid token
+@MGMT_API_ACCESS_TOKEN=
+
+POST https://{{$dotenv AUTH0_DOMAIN}}/api/v2/clients
+Content-Type: application/json
+Authorization: Bearer {{MGMT_API_ACCESS_TOKEN}}
+
+{
+	"name": "Applications Manager",
+	"app_type": "non_interactive",
+	"is_first_party": true
+}

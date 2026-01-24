@@ -1,0 +1,16 @@
+// use request-management-token.http to get a valid token
+@MGMT_API_ACCESS_TOKEN=
+
+POST https://{{$dotenv AUTH0_DOMAIN}}/api/v2/client-grants
+Content-Type: application/json
+Authorization: Bearer {{MGMT_API_ACCESS_TOKEN}}
+
+{
+	"client_id": "{{$dotenv AUTH0_APP_MANAGER_CLIENT_ID}}",
+	"audience": "https://{{$dotenv AUTH0_DOMAIN}}/api/v2/",
+	"scope": [
+		"create:clients",
+		"create:client_grants"
+	],
+	"subject_type": "client"
+}
