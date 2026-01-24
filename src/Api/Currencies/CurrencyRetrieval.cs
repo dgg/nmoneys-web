@@ -3,6 +3,7 @@ using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 using NMoneys.Api.Currencies.DataTypes;
+using NMoneys.Api.Infrastructure.Auth;
 using NMoneys.Api.Infrastructure.Serialization;
 using NMoneys.Api.Infrastructure.OpenApi;
 
@@ -28,12 +29,12 @@ internal sealed class CurrencyRetrieval : Endpoint<CurrencyRetrievalRequest, Res
 	public override void Configure()
 	{
 		Get("/currencies/{alphabeticCode:alpha}");
-		AllowAnonymous();
 		SerializerContext<SerializationContext>();
+		Scopes(AuthorizationScope.ReadCurrencies);
 		Summary(s =>
 		{
 			s.Summary = "Get currency details";
-			s.Description = "Retrieves detailed information about a specific currency by its ISO code.";
+			s.Description = "Retrieves detailed information about a specific currency by its ISO code. Scopes: [read:currencies]";
 			s.RequestParam(x => x.AlphabeticCode, "ISO 4217 currency code (e.g., USD, EUR, CHF)");
 			s.Response(200, "Currency details", example: CurrencyRetrievalResponse.Example);
 		});
