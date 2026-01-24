@@ -17,24 +17,24 @@ builder.Host.UseLamar(registry =>
 	});
 });
 
-builder.Services
-	.AddFastEndpoints();
+builder.Services.AddFastEndpoints();
 
 var app = builder.Build();
 
-app.UseFastEndpoints(c =>
-{
-	c.Endpoints.ShortNames = true;
-	c.Errors.UseProblemDetails();
-});
+// Add authentication and authorization middleware BEFORE FastEndpoints
+app
+	.UseAuthentication()
+	.UseAuthorization()
+	.UseFastEndpoints(c =>
+	{
+		c.Endpoints.ShortNames = true;
+		c.Errors.UseProblemDetails();
+	});
 
 // do not expose swagger in prod
 if (!app.Environment.IsProduction())
 {
-	app.UseSwaggerGen(uiConfig: ui =>
-	{
-		ui.ShowOperationIDs();
-	});
+	app.UseSwaggerGen(uiConfig: ui => ui.ShowOperationIDs());
 }
 
 app.Run();
