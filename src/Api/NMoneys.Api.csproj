@@ -4,6 +4,7 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>8353e27d-cc24-4365-b202-f3974c5c97f3</UserSecretsId>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -18,12 +19,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Ardalis.SmartEnum" Version="8.2.0" />
 		<PackageReference Include="FastEndpoints" Version="7.2.0" />
 		<PackageReference Include="FastEndpoints.HealthChecks" Version="7.2.0" />
 		<PackageReference Include="FastEndpoints.Swagger" Version="7.2.0" />
 		<PackageReference Include="Lamar" Version="15.0.1" />
 		<PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="15.0.1" />
 		<PackageReference Include="Mapster" Version="7.4.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
 		<PackageReference Include="NMoneys" Version="7.4.0" />
 	</ItemGroup>
 
@@ -35,8 +38,8 @@
 		<RuntimeIdentifiers>linux-arm64;linux-x64</RuntimeIdentifiers>
 		<InvariantGlobalization>True</InvariantGlobalization>
 		<SelfContained>False</SelfContained>
-		<Version>1.1.0</Version>
-		<ContainerImageTags>1.1.0;latest</ContainerImageTags>
+		<Version>2.0.0</Version>
+		<ContainerImageTags>2.0.0;latest</ContainerImageTags>
 		<ContainerRuntimeIdentifiers>linux-arm64;linux-x64</ContainerRuntimeIdentifiers>
 		<ContainerFamily>noble-chiseled</ContainerFamily>
 		<ContainerImageFormat>OCI</ContainerImageFormat>
