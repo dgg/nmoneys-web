@@ -17,8 +17,10 @@ public class OpenApiRegistry : ServiceRegistry
 			{
 				d.Title = "nMoneys API";
 				d.Version = "v1";
-				d.Description = "API for currency information retrieval";
+				d.Description = "API for currency information retrieval and amount formatting.";
 				d.MarkNonNullablePropsAsRequired();
+				
+				d.SchemaSettings.TypeMappers.Add(new EmailMapper());
 			};
 		});
 	}
