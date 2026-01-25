@@ -1,0 +1,9 @@
+POST https://{{$dotenv AUTH0_DOMAIN}}/oauth/token
+Content-Type: application/json
+
+{
+	"client_id": "{{$dotenv AUTH0_DEFAULT_CLIENT_ID}}",
+	"client_secret": "{{$dotenv AUTH0_DEFAULT_CLIENT_SECRET}}",
+	"audience": "https://{{$dotenv AUTH0_DOMAIN}}/api/v2/",
+	"grant_type": "client_credentials"
+}

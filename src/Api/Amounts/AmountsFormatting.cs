@@ -4,11 +4,12 @@ using FastEndpoints;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
+using NMoneys.Api.Infrastructure.Auth;
 using NMoneys.Api.Infrastructure.OpenApi;
 using NMoneys.Api.Infrastructure.Serialization;
 using NMoneys.Extensions;
 
-namespace NMoneys.Api.Currencies;
+namespace NMoneys.Api.Amounts;
 
 /// <summary>
 /// Request to format currency amounts.
@@ -37,14 +38,15 @@ internal sealed class AmountsFormatting : Endpoint<AmountsFormattingRequest, Res
 {
 	public override void Configure()
 	{
-		Post("/currencies/{alphabeticCode:alpha}/formats");
-		AllowAnonymous();
+		Post("/amounts/formats");
 		SerializerContext<SerializationContext>();
+
+		Scopes(AuthorizationScope.FormatAmounts);
 		Summary(s =>
 		{
-			s.Summary = "Format currency amounts";
-			s.Description = "Formats a collection of amounts for a specific currency using the currency's formatting rules.";
-			s.RequestParam(r => r.AlphabeticCode, "ISO 4217 currency code (e.g., USD, EUR, CHF)");
+			s.Summary = "Format monetary amounts according to currency";
+			s.Description = "Formats a collection of amounts for a specific currency using the currency's formatting rules. Scopes: [format:amounts].";
+			//s.RequestParam(r => r.AlphabeticCode, "ISO 4217 currency code (e.g., USD, EUR, CHF)");
 			s.Response(200, "Formatted amounts", example: AmountsFormattingResponse.Example);
 		});
 	}

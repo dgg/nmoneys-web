@@ -1,0 +1,25 @@
+// use request-management-token.http to get a valid token
+@MGMT_API_ACCESS_TOKEN=
+
+POST https://{{$dotenv AUTH0_DOMAIN}}/api/v2/resource-servers
+Content-Type: application/json
+Authorization: Bearer {{MGMT_API_ACCESS_TOKEN}}
+
+{
+	"name": "nmoneys-api",
+	"identifier": "urn:nmoneys:api",
+	"scopes": [
+		{
+			"value": "read:currencies",
+			"description": "Access currency information"
+		},
+		{
+			"value": "format:amounts",
+			"description": "Format amounts"
+		}
+	],
+	"token_dialect": "rfc9068_profile",
+	"signing_alg": "RS256",
+	"allow_offline_access": false,
+	"skip_consent_for_verifiable_first_party_clients": true
+}

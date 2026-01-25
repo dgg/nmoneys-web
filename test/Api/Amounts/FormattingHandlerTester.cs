@@ -1,9 +1,9 @@
 using NMoneys;
-using NMoneys.Api.Currencies;
+using NMoneys.Api.Amounts;
 
-using Subject = NMoneys.Api.Currencies.FormattingHandler;
+using Subject = NMoneys.Api.Amounts.FormattingHandler;
 
-namespace Api.Tests.Currencies;
+namespace Api.Tests.Amounts;
 
 [TestFixture]
 public class FormattingHandlerTester

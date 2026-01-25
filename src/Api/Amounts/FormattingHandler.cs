@@ -1,6 +1,6 @@
 using FastEndpoints;
 
-namespace NMoneys.Api.Currencies;
+namespace NMoneys.Api.Amounts;
 
 internal record struct FormatAmounts(CurrencyIsoCode Code, decimal[] Amounts) : ICommand<AmountsFormattingResponse>;
 

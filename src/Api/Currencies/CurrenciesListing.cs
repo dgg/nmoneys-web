@@ -1,6 +1,7 @@
 using FastEndpoints;
 
 using NMoneys.Api.Currencies.DataTypes;
+using NMoneys.Api.Infrastructure.Auth;
 using NMoneys.Api.Infrastructure.Serialization;
 using NMoneys.Api.Infrastructure.OpenApi;
 
@@ -20,12 +21,12 @@ internal sealed class CurrenciesListing : EndpointWithoutRequest<CurrenciesListi
 	public override void Configure()
 	{
 		Get("/currencies");
-		AllowAnonymous();
 		SerializerContext<SerializationContext>();
+		Scopes(AuthorizationScope.ReadCurrencies);
 		Summary(s =>
 		{
 			s.Summary = "List currencies";
-			s.Description = "Provides information about supported currencies. Obsolete currencies are returned.";
+			s.Description = "Provides information about supported currencies. Obsolete currencies are returned. Scopes: [read:currencies]";
 			s.Response(200, "List of currencies", example: CurrenciesListingResponse.Example);
 		});
 	}
